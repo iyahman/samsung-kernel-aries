@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_SEMA_VER="Semaphore_KK_3.4.1"
+BASE_SEMA_VER="Semaphore_KK_3.4.2"
 
 case "$1" in
         galaxys)
