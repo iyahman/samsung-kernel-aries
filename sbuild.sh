@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_SEMA_VER="Semaphore_KK_3.4.3"
+BASE_SEMA_VER="IyahmanKernel"
 
 case "$1" in
         galaxys)
@@ -32,7 +32,7 @@ SEMA_VER=$BASE_SEMA_VER$VER
 #export KBUILD_BUILD_VERSION="2"
 export LOCALVERSION="-"`echo $SEMA_VER`
 #export CROSS_COMPILE=/opt/toolchains/gcc-linaro-arm-linux-gnueabihf-2012.09-20120921_linux/bin/arm-linux-gnueabihf-
-export CROSS_COMPILE=../toolchain/arm-linux-gnueabihf-
+export CROSS_COMPILE=~/android/utilitaire/linaro/linaro-toolchains1/bin/arm-cortex_a8-linux-gnueabi-
 export ARCH=arm
 
 echo 
