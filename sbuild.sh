@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_SEMA_VER="IyahmanKernel"
+BASE_SEMA_VER="IyahmanKernel_28-07-15_CMWtouch-6.0.5.1_linaro-4.9.4"
 
 case "$1" in
         galaxys)
