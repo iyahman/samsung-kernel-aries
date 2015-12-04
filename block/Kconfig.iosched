@@ -2,78 +2,6 @@ if BLOCK
 
 menu "IO Schedulers"
 
-config IOSCHED_BFQ
-	tristate "BFQ I/O scheduler"
-	default y
-	---help---
-	  BFQ is a proportional-share storage-I/O scheduling algorithm based on
-	  the slice-by-slice service scheme of CFQ. But BFQ assigns budgets,
-	  measured in number of sectors, to processes instead of time slices. The
-	  device is not granted to the in-service process for a given time slice,
-	  but until it has exhausted its assigned budget. This change from the time
-	  to the service domain allows BFQ to distribute the device throughput
-	  among processes as desired, without any distortion due to ZBR, workload
-	  fluctuations or other factors. BFQ uses an ad hoc internal scheduler,
-	  called B-WF2Q+, to schedule processes according to their budgets. More
-	  precisely, BFQ schedules queues associated to processes. Thanks to the
-	  accurate policy of B-WF2Q+, BFQ can afford to assign high budgets to
-	  I/O-bound processes issuing sequential requests (to boost the
-	  throughput), and yet guarantee a low latency to interactive and soft
-	  real-time applications.
-	  
-config IOSCHED_FIFO
-	tristate "FIFO I/O scheduler"
-	default y
-	---help---
-	  A relatively simple io schedulers that does what has been described.
-	  It is also known as FCFS (First come first serve) but this really isn't true.
-	  It does basic sorting; sorting the processes according to the appropriate
-	  order and nothing else. In other words, it is quite similar to noop. 
-  
-config IOSCHED_FIOPS
-	tristate "FIOPS I/O scheduler"
-	default y
-	---help---
-	  This new I/O scheduler is designed around the following assumptions 
-	  about Flash-based storage devices: no I/O seek time, 
-	  read and write I/O cost is usually different from rotating media,
-	  time to make a request depends upon the request size, 
-	  and high through-put and higher IOPS with low-latency.
-	  
-config IOSCHED_SIO
-	tristate "Simple I/O scheduler"
-	default y
-	---help---
-	  scheduler is based on the deadline scheduler but it's more like a mix 
-	  between no-op and deadline.In other words, SIO is like a lighter version
-	  of deadline but it doesn't do any kind of sorting, 
-	  so it's aimed mainly for random-access devices (like SSD hard disks)
-	  where request sorting is no needed (as any sector can be accesed
-	  in a constant time, regardless of its physical location).
-	  
-config IOSCHED_VR
-	tristate "VR I/O scheduler"
-	default y
-	---help---
-	  Unlike other scheduling software, synchronous and asynchronous requests
-	  are not handled separately, but it will impose a fair and balanced within
-	  this deadline requests, that the next request to be served is a function 
-	  of distance from the last request. The VR is a very good scheduler with elements
-	  of the deadline scheduler. He will probably be the best for MTD Android devices.
-	  He is the one who can make the most of the benchmark points, but he is also an 
-	  unstable schedulers, because his performance falter. Sometimes they fluctuate 
-	  below the average, sometimes it fluctuates above the average, 
-	  but if above, then he is the best. 
-	  
-config IOSCHED_ZEN
-	tristate "ZEN I/O scheduler"
-	default y
-	---help---
-	  Based on the VR Scheduler. It's an FCFS (First come, first serve) based algorithm.
-	  It's not strictly FIFO. It does not do any sorting. It uses deadlines for fairness,
-	  and treats synchronous requests with priority over asynchronous ons. 
-	  Other than that, pretty much the same as no-op.
-	  
 config IOSCHED_NOOP
 	bool
 	default y
@@ -142,24 +70,6 @@ choice
 	  Select the I/O scheduler which will be used by default for all
 	  block devices.
 
-	config DEFAULT_BFQ
-		bool "bfq" if IOSCHED_BFQ=y
-
-	config DEFAULT_FIFO
-		bool "fifo" if IOSCHED_FIFO=y
-
-	config DEFAULT_FIOPS
-		bool "fiops" if IOSCHED_FIOPS=y
-
-	config DEFAULT_SIO
-		bool "sio" if IOSCHED_SIO=y
-
-	config DEFAULT_VR
-		bool "vr" if IOSCHED_VR=y
-
-	config DEFAULT_ZEN
-		bool "zen" if IOSCHED_ZEN=y
-		
 	config DEFAULT_DEADLINE
 		bool "Deadline" if IOSCHED_DEADLINE=y
 
@@ -183,12 +93,6 @@ endchoice
 
 config DEFAULT_IOSCHED
 	string
-	default "bfq" if DEFAULT_BFQ
-	default "fifo" if DEFAULT_FIFO
-	default "fiops" if DEFAULT_FIOPS
-	default "sio" if DEFAULT_SIO
-	default "vr" if DEFAULT_VR
-	default "zen" if DEFAULT_ZEN
 	default "deadline" if DEFAULT_DEADLINE
 	default "row" if DEFAULT_ROW
 	default "cfq" if DEFAULT_CFQ

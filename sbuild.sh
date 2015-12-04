@@ -1,6 +1,10 @@
 #!/bin/bash
 
+<<<<<<< HEAD
 BASE_SEMA_VER="IyahmanKernel_pwnair"
+=======
+BASE_SEMA_VER="IyahmanKernel"
+>>>>>>> parent of 8df3022... add some scheduler and governor 'test'
 
 case "$1" in
         galaxys)
